@@ -13,20 +13,30 @@
     <!-- Header -->
     <header>
         <h1>GrandStay Premium Restaurant</h1>
-        <nav>
+
+        <!-- Hamburger Menu -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Navigation -->
+        <nav id="navbar">
             <a href="index.html">Home</a>
             <a href="rooms.html">Rooms</a>
-            <a href="restaurant.html">Restaurant</a>
+            <a href="restaurant.html" class="active">Restaurant</a>
             <a href="booking.html">Booking</a>
             <a href="dashboard.html">Dashboard</a>
             <a href="admin.html">Admin</a>
+            <a href="login.html">Login</a>
         </nav>
     </header>
 
     <!-- Hero -->
-    <section>
-        <h2>World-Class Dining Experience</h2>
-        <p>Indian, Chinese, Italian, Burgers, Desserts, Drinks and more... delivered to your luxury stay.</p>
+    <section class="hero">
+        <div class="hero-content">
+            <h2>World-Class Dining Experience</h2>
+            <p>Indian, Chinese, Italian, Burgers, Desserts, Drinks and more... delivered to your luxury stay.</p>
+        </div>
     </section>
 
     <!-- FOOD MENU -->
@@ -235,66 +245,89 @@
         <p>© 2026 GrandStay Premium Restaurant | Luxury Dining</p>
     </footer>
 
-  <script>
-    function placeOrder() {
+    <script>
 
-        // GET USER INPUTS
-        const customerName = document.getElementById("customerName").value;
-        const customerEmail = document.getElementById("customerEmail").value;
-        const foodItem = document.getElementById("foodItem").value;
-        const quantity = document.getElementById("quantity").value;
-        const specialRequest = document.getElementById("specialRequest").value;
-        const orderDate = document.getElementById("orderDate").value;
-        const orderTime = document.getElementById("orderTime").value;
-
-        // VALIDATION
-        if (!customerName || !customerEmail || !foodItem || !quantity || !orderDate || !orderTime) {
-            alert("Please fill all premium food order details!");
-            return;
+        // MOBILE MENU TOGGLE
+        function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("show");
         }
 
-        // CREATE ORDER OBJECT
-        const foodOrder = {
-            customerName: customerName,
-            customerEmail: customerEmail,
-            foodItem: foodItem,
-            quantity: quantity,
-            specialRequest: specialRequest,
-            orderDate: orderDate,
-            orderTime: orderTime,
-            orderStatus: "Pending"
-        };
-
-        // SEND TO BACKEND
-        fetch("http://localhost:8080/food-orders", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(foodOrder)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Food order failed");
-                }
-                return response.json();
-            })
-            .then(data => {
-
-                // SAVE LAST ORDER FOR SUCCESS PAGE
-                localStorage.setItem("lastFoodOrder", JSON.stringify(foodOrder));
-
-                alert("Premium Food Order Placed Successfully! 🍽️");
-
-                // REDIRECT TO SUCCESS PAGE
-                window.location.href = "success.html";
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Food Order Failed! Check backend.");
+        // AUTO CLOSE MENU
+        document.querySelectorAll("#navbar a").forEach(link => {
+            link.addEventListener("click", () => {
+                document.getElementById("navbar").classList.remove("show");
             });
-    }
-</script>
+        });
+
+        // PLACE FOOD ORDER
+        function placeOrder() {
+
+            const customerName = document.getElementById("customerName").value.trim();
+            const customerEmail = document.getElementById("customerEmail").value.trim();
+            const foodItem = document.getElementById("foodItem").value;
+            const quantity = document.getElementById("quantity").value;
+            const specialRequest = document.getElementById("specialRequest").value.trim();
+            const orderDate = document.getElementById("orderDate").value;
+            const orderTime = document.getElementById("orderTime").value;
+
+            // VALIDATION
+            if (!customerName || !customerEmail || !foodItem || !quantity || !orderDate || !orderTime) {
+                alert("Please fill all premium food order details!");
+                return;
+            }
+
+            // EMAIL CHECK
+            if (!customerEmail.includes("@")) {
+                alert("Please enter a valid email!");
+                return;
+            }
+
+            const foodOrder = {
+                customerName: customerName,
+                customerEmail: customerEmail,
+                foodItem: foodItem,
+                quantity: parseInt(quantity),
+                specialRequest: specialRequest,
+                orderDate: orderDate,
+                orderTime: orderTime,
+                orderStatus: "Pending"
+            };
+
+            console.log("Sending Food Order:", foodOrder);
+
+            fetch("http://localhost:8080/food-orders", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(foodOrder)
+            })
+                .then(async response => {
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(errorText || "Food order failed");
+                    }
+
+                    return response.json();
+                })
+                .then(data => {
+
+                    // SAVE ORDER
+                    localStorage.setItem("lastFoodOrder", JSON.stringify(data));
+
+                    alert("Premium Food Order Placed Successfully! 🍽️");
+
+                    // REDIRECT
+                    window.location.href = "success.html";
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Food Order Failed! " + error.message);
+                });
+        }
+
+    </script>
 
 </body>
 
