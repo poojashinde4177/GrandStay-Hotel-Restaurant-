@@ -14,7 +14,13 @@
     <header>
         <h1>GrandStay Admin Dashboard</h1>
 
-        <nav>
+        <!-- Hamburger Menu -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Navigation -->
+        <nav id="navbar">
             <a href="index.html">Home</a>
             <a href="booking.html">Booking</a>
             <a href="restaurant.html">Restaurant</a>
@@ -38,8 +44,7 @@
     <section>
         <h2>Room Bookings Management</h2>
 
-        <table border="1" width="100%" cellpadding="10"
-            style="background:white; border-collapse: collapse; text-align:center;">
+        <table>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -65,8 +70,7 @@
     <section>
         <h2>Food Orders Management</h2>
 
-        <table border="1" width="100%" cellpadding="10"
-            style="background:white; border-collapse: collapse; text-align:center;">
+        <table>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -90,8 +94,20 @@
         </table>
     </section>
 
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 GrandStay Admin Control Center | Luxury Management</p>
+    </footer>
+
     <!-- Script -->
     <script>
+
+        // ===============================
+        // HAMBURGER MENU
+        // ===============================
+        function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("show");
+        }
 
         // ===============================
         // ADMIN SECURITY CHECK
@@ -159,6 +175,11 @@
             })
             .catch(error => {
                 console.error("Error loading bookings:", error);
+                document.getElementById("bookingTable").innerHTML = `
+                    <tr>
+                        <td colspan="8">Failed to load bookings.</td>
+                    </tr>
+                `;
             });
 
 
@@ -218,17 +239,9 @@
 
                             <td>
                                 <select onchange="updateFoodStatus(${order.id}, this.value)">
-                                    <option value="Pending" ${order.orderStatus === 'Pending' ? 'selected' : ''}>
-                                        Pending
-                                    </option>
-
-                                    <option value="Preparing" ${order.orderStatus === 'Preparing' ? 'selected' : ''}>
-                                        Preparing
-                                    </option>
-
-                                    <option value="Delivered" ${order.orderStatus === 'Delivered' ? 'selected' : ''}>
-                                        Delivered
-                                    </option>
+                                    <option value="Pending" ${order.orderStatus === 'Pending' ? 'selected' : ''}>Pending</option>
+                                    <option value="Preparing" ${order.orderStatus === 'Preparing' ? 'selected' : ''}>Preparing</option>
+                                    <option value="Delivered" ${order.orderStatus === 'Delivered' ? 'selected' : ''}>Delivered</option>
                                 </select>
                             </td>
 
@@ -244,6 +257,11 @@
             })
             .catch(error => {
                 console.error("Error loading food orders:", error);
+                document.getElementById("foodOrderTable").innerHTML = `
+                    <tr>
+                        <td colspan="10">Failed to load food orders.</td>
+                    </tr>
+                `;
             });
 
 
