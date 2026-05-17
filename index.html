@@ -14,13 +14,18 @@
     <header>
         <h1>GrandStay Hotel & Restaurant</h1>
 
-        <nav>
-            <a href="index.html">Home</a>
+        <!-- Hamburger Button -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Navigation -->
+        <nav id="navbar">
+            <a href="index.html" class="active">Home</a>
             <a href="rooms.html">Rooms</a>
             <a href="restaurant.html">Restaurant</a>
             <a href="booking.html">Booking</a>
             <a href="dashboard.html">Dashboard</a>
-            <a href="admin.html">Admin</a>
             <a href="login.html">Login</a>
         </nav>
     </header>
@@ -29,7 +34,7 @@
     <section class="hero">
         <div class="hero-content">
             <h2>Luxury Stay, Premium Dining, Unforgettable Experience</h2>
-            <p>Discover elegant rooms, world-class cuisine, and seamless hospitality all in one destination.</p>
+            <p>Discover elegant suites, world-class cuisine, and seamless hospitality crafted for modern luxury.</p>
 
             <div class="hero-buttons">
                 <a href="booking.html">
@@ -52,19 +57,19 @@
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85" alt="Deluxe Room">
                 <h3>Deluxe Suite</h3>
-                <p>Elegant comfort with premium interiors and city views.</p>
+                <p>Elegant interiors, king-size comfort, and premium skyline views.</p>
             </div>
 
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945" alt="Executive Room">
                 <h3>Executive Room</h3>
-                <p>Perfect blend of luxury, work, and relaxation.</p>
+                <p>Perfect harmony of productivity, relaxation, and modern sophistication.</p>
             </div>
 
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461" alt="Royal Suite">
                 <h3>Royal Presidential Suite</h3>
-                <p>Experience unmatched sophistication and elite hospitality.</p>
+                <p>Where elite comfort meets timeless luxury.</p>
             </div>
 
         </div>
@@ -79,19 +84,19 @@
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0" alt="Dining">
                 <h3>Luxury Dining</h3>
-                <p>Global flavors from Indian classics to international gourmet delights.</p>
+                <p>From Indian masterpieces to international gourmet experiences.</p>
             </div>
 
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9" alt="Desserts">
                 <h3>Premium Desserts</h3>
-                <p>Sweet creations crafted for unforgettable indulgence.</p>
+                <p>Sweet artistry designed for memorable indulgence.</p>
             </div>
 
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1497534446932-c925b458314e" alt="Drinks">
                 <h3>Signature Beverages</h3>
-                <p>Refreshing handcrafted drinks for every mood.</p>
+                <p>Handcrafted refreshment for every celebration.</p>
             </div>
 
         </div>
@@ -102,10 +107,27 @@
         <h2>Why Choose GrandStay?</h2>
 
         <p>✔ Luxury rooms with premium amenities</p>
-        <p>✔ Fine dining with 50+ curated dishes</p>
-        <p>✔ Secure online booking & payment</p>
-        <p>✔ Real-time customer dashboard</p>
-        <p>✔ Admin-controlled booking & restaurant management</p>
+        <p>✔ Fine dining with curated global cuisine</p>
+        <p>✔ Secure online booking & seamless payments</p>
+        <p>✔ Personalized dashboard with real-time updates</p>
+        <p>✔ Smart hospitality excellence</p>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section>
+        <h2>About GrandStay</h2>
+
+        <div class="booking-form">
+            <p>
+                GrandStay was built to redefine luxury hospitality through elegant stays,
+                premium dining, and seamless digital experiences.
+            </p>
+
+            <p>
+                From royal suites to gourmet dining, every detail is designed for guests
+                who expect sophistication, comfort, and unforgettable memories.
+            </p>
+        </div>
     </section>
 
     <!-- Testimonials -->
@@ -116,20 +138,59 @@
 
             <div class="room-card">
                 <h3>⭐⭐⭐⭐⭐</h3>
-                <p>"A flawless luxury stay with exceptional service and incredible dining."</p>
+                <p>"A flawless luxury experience with unforgettable hospitality."</p>
                 <p><strong>- Priya S.</strong></p>
             </div>
 
             <div class="room-card">
                 <h3>⭐⭐⭐⭐⭐</h3>
-                <p>"The dashboard, room comfort, and food delivery experience were amazing."</p>
+                <p>"Beautiful rooms, smooth booking, and exceptional dining."</p>
                 <p><strong>- Rahul M.</strong></p>
             </div>
 
             <div class="room-card">
                 <h3>⭐⭐⭐⭐⭐</h3>
-                <p>"GrandStay feels like a modern premium hospitality brand."</p>
+                <p>"GrandStay feels like premium hospitality reimagined."</p>
                 <p><strong>- Aditi K.</strong></p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section>
+        <h2>Contact GrandStay</h2>
+
+        <div class="booking-form">
+
+            <input type="text" id="contactName" placeholder="Your Name" required>
+
+            <input type="email" id="contactEmail" placeholder="Your Email" required>
+
+            <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+
+            <button onclick="sendMessage()">Send Message</button>
+
+        </div>
+    </section>
+
+    <!-- Contact Info -->
+    <section>
+        <div class="rooms-container">
+
+            <div class="room-card">
+                <h3>📍 Location</h3>
+                <p>Mumbai, India | GrandStay Premium Avenue</p>
+            </div>
+
+            <div class="room-card">
+                <h3>📞 Call Us</h3>
+                <p>+91 78228 11037</p>
+            </div>
+
+            <div class="room-card">
+                <h3>📧 Email</h3>
+                <p>support@grandstay.com</p>
             </div>
 
         </div>
@@ -139,7 +200,7 @@
     <section class="hero">
         <div class="hero-content">
             <h2>Ready for Your Grand Experience?</h2>
-            <p>Book your stay today and unlock luxury beyond expectations.</p>
+            <p>Reserve today and unlock luxury beyond expectation.</p>
 
             <a href="booking.html">
                 <button>Reserve Now</button>
@@ -151,6 +212,44 @@
     <footer>
         <p>© 2026 GrandStay Hotel & Restaurant | Luxury Redefined</p>
     </footer>
+
+    <!-- Scripts -->
+    <script>
+
+        // Hamburger Menu
+        function toggleMenu() {
+            const navbar = document.getElementById("navbar");
+            navbar.classList.toggle("show");
+        }
+
+        // Contact Form
+        function sendMessage() {
+
+            const name = document.getElementById("contactName").value;
+            const email = document.getElementById("contactEmail").value;
+            const message = document.getElementById("contactMessage").value;
+
+            if (!name || !email || !message) {
+                alert("Please fill all contact details!");
+                return;
+            }
+
+            const contactData = {
+                name: name,
+                email: email,
+                message: message
+            };
+
+            localStorage.setItem("grandstayContact", JSON.stringify(contactData));
+
+            alert("Message Sent Successfully! Our team will contact you soon.");
+
+            document.getElementById("contactName").value = "";
+            document.getElementById("contactEmail").value = "";
+            document.getElementById("contactMessage").value = "";
+        }
+
+    </script>
 
 </body>
 
