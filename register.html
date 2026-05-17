@@ -14,7 +14,13 @@
     <header>
         <h1>GrandStay Hotel & Restaurant</h1>
 
-        <nav>
+        <!-- Hamburger Menu -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Navigation -->
+        <nav id="navbar">
             <a href="index.html">Home</a>
             <a href="rooms.html">Rooms</a>
             <a href="restaurant.html">Restaurant</a>
@@ -45,6 +51,8 @@
             <input type="email" id="email" placeholder="Enter Email Address" required>
 
             <input type="password" id="password" placeholder="Create Password" required>
+
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
 
             <select id="role">
                 <option value="customer">Customer Account</option>
@@ -98,18 +106,44 @@
 
     <!-- REGISTER SCRIPT -->
     <script>
+
+        // ===============================
+        // HAMBURGER MENU
+        // ===============================
+        function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("show");
+        }
+
+        // ===============================
+        // REGISTER USER
+        // ===============================
         function registerUser() {
 
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirmPassword = document.getElementById("confirmPassword").value.trim();
             const role = document.getElementById("role").value;
 
-            if (!name || !email || !password) {
+            // VALIDATION
+            if (!name || !email || !password || !confirmPassword) {
                 alert("Please fill all registration details!");
                 return;
             }
 
+            // PASSWORD MATCH CHECK
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // PASSWORD LENGTH
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long!");
+                return;
+            }
+
+            // SEND TO BACKEND
             fetch("http://localhost:8080/users/register", {
                 method: "POST",
                 headers: {
@@ -129,7 +163,10 @@
                     return response.json();
                 })
                 .then(data => {
-                    alert("Registration Successful! Please Login.");
+
+                    alert("Registration Successful! Please Login ✨");
+
+                    // REDIRECT TO LOGIN
                     window.location.href = "login.html";
                 })
                 .catch(error => {
@@ -138,6 +175,7 @@
                 });
 
         }
+
     </script>
 
 </body>
