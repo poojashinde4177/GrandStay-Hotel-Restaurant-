@@ -32,6 +32,16 @@ header h1 {
     font-weight: bold;
 }
 
+/* HAMBURGER MENU */
+.menu-toggle {
+    display: none;
+    font-size: 32px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+}
+
 /* NAVBAR */
 nav {
     display: flex;
@@ -262,7 +272,7 @@ footer {
     margin-top: 40px;
 }
 
-/* RESPONSIVE */
+/* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
 
     header h1 {
@@ -277,9 +287,30 @@ footer {
         font-size: 1rem;
     }
 
+    /* SHOW HAMBURGER */
+    .menu-toggle {
+        display: block;
+    }
+
+    /* HIDE NAVBAR */
     nav {
+        display: none;
         flex-direction: column;
+        width: 100%;
         gap: 10px;
+        margin-top: 10px;
+    }
+
+    /* SHOW WHEN CLICKED */
+    nav.show {
+        display: flex;
+    }
+
+    nav a {
+        display: block;
+        width: 85%;
+        margin: auto;
+        text-align: center;
     }
 
     table {
@@ -291,4 +322,19 @@ footer {
     .booking-form {
         padding: 20px;
     }
+}
+
+/* BOOTSTRAP NAV CUSTOM */
+.navbar {
+    padding: 12px;
+}
+
+.navbar-nav .nav-link {
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.navbar-brand {
+    font-size: 22px;
+    letter-spacing: 1px;
 }
