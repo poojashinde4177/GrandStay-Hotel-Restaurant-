@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrandStay Success</title>
     <link rel="stylesheet" href="style.css">
+
+    <!-- SEO -->
+    <meta name="description"
+        content="GrandStay booking and premium food order successful. Experience luxury hospitality with GrandStay Hotel & Restaurant.">
 </head>
 
 <body>
@@ -14,7 +18,13 @@
     <header>
         <h1>GrandStay Hotel & Restaurant</h1>
 
-        <nav>
+        <!-- Hamburger Button -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Navigation -->
+        <nav id="navbar">
             <a href="index.html">Home</a>
             <a href="rooms.html">Rooms</a>
             <a href="restaurant.html">Restaurant</a>
@@ -27,38 +37,31 @@
     <!-- Success Hero -->
     <section class="hero">
         <div class="hero-content">
-            <h2>Booking / Order Confirmed Successfully! 🎉</h2>
-            <p>Your premium GrandStay experience is officially secured.</p>
+            <h2>🎉 Booking / Order Confirmed Successfully!</h2>
+            <p>Your GrandStay experience is officially reserved. Luxury, comfort, and premium service await you.</p>
         </div>
     </section>
 
     <!-- Success Details -->
-    <section>
-        <div class="booking-form">
+    <section class="booking-form">
 
-            <h2 id="successTitle">Success Confirmation</h2>
+        <h2>Thank You for Choosing GrandStay</h2>
 
-            <p><strong>Guest Name:</strong> <span id="customerName">Premium Guest</span></p>
+        <p>✔ Your booking or food order has been successfully received.</p>
+        <p>✔ Payment processed securely.</p>
+        <p>✔ Confirmation saved in your dashboard.</p>
+        <p>✔ Our team is preparing your premium experience.</p>
 
-            <p><strong>Email:</strong> <span id="customerEmail">guest@grandstay.com</span></p>
+        <br>
 
-            <p><strong>Status:</strong> Confirmed ✅</p>
+        <a href="dashboard.html">
+            <button>Go To Dashboard</button>
+        </a>
 
-            <p><strong>Message:</strong></p>
+        <a href="index.html">
+            <button type="button">Back To Home</button>
+        </a>
 
-            <p id="successMessage">
-                Thank you for choosing GrandStay. Your luxury reservation/order has been successfully recorded.
-            </p>
-
-            <br>
-
-            <button onclick="goDashboard()">Go To Dashboard</button>
-
-            <br><br>
-
-            <button onclick="goHome()">Back To Homepage</button>
-
-        </div>
     </section>
 
     <!-- Premium Benefits -->
@@ -68,104 +71,76 @@
         <div class="rooms-container">
 
             <div class="room-card">
-                <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85" alt="Room">
-                <h3>Luxury Ready</h3>
-                <p>Your booking or dining request is now in our premium system.</p>
+                <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85" alt="Luxury Stay">
+                <h3>Luxury Stay Ready</h3>
+                <p>Your premium room or suite is being prepared for a flawless stay.</p>
             </div>
 
             <div class="room-card">
-                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0" alt="Food">
-                <h3>Live Dashboard Tracking</h3>
-                <p>Monitor bookings and food orders from your dashboard.</p>
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0" alt="Dining">
+                <h3>Dining Excellence</h3>
+                <p>Your gourmet dining or food order will be handled with priority.</p>
             </div>
 
             <div class="room-card">
-                <img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4" alt="Rewards">
-                <h3>Elite Experience</h3>
-                <p>Enjoy premium hospitality, rewards, and exclusive comfort.</p>
+                <img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4" alt="Dashboard">
+                <h3>Track Everything</h3>
+                <p>Visit your dashboard anytime for booking, food orders, and updates.</p>
             </div>
 
         </div>
     </section>
 
+    <!-- Contact Support -->
+    <section class="booking-form">
+        <h2>Need Help?</h2>
+
+        <p>📞 Call Us: +91 98765 43210</p>
+        <p>📧 Email: support@grandstay.com</p>
+        <p>📍 GrandStay Premium Avenue, Mumbai, India</p>
+    </section>
+
     <!-- Footer -->
     <footer>
-        <p>© 2026 GrandStay Hotel & Restaurant | Luxury Confirmed</p>
+        <p>© 2026 GrandStay Hotel & Restaurant | Luxury Redefined</p>
+        <p>
+            <a href="index.html">Home</a> |
+            <a href="rooms.html">Rooms</a> |
+            <a href="restaurant.html">Restaurant</a> |
+            <a href="booking.html">Booking</a> |
+            <a href="login.html">Login</a>
+        </p>
     </footer>
 
+    <!-- Scroll To Top Button -->
+    <button onclick="scrollToTop()" id="topBtn" title="Go to top">↑</button>
+
+    <!-- Scripts -->
     <script>
 
-        // GET LOGGED IN USER
-        const loggedInUser = JSON.parse(localStorage.getItem("grandstayUser"));
-
-        if (loggedInUser) {
-            document.getElementById("customerName").innerText =
-                loggedInUser.name || "Premium Guest";
-
-            document.getElementById("customerEmail").innerText =
-                loggedInUser.email || "guest@grandstay.com";
+        // Hamburger Menu
+        function toggleMenu() {
+            const navbar = document.getElementById("navbar");
+            navbar.classList.toggle("show");
         }
 
-        // CHECK LAST FOOD ORDER
-        const lastFoodOrder = JSON.parse(localStorage.getItem("lastFoodOrder"));
+        // Scroll Button
+        window.onscroll = function () {
+            const topBtn = document.getElementById("topBtn");
 
-        // CHECK LAST BOOKING
-        const lastBooking = JSON.parse(localStorage.getItem("lastBooking"));
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                topBtn.style.display = "block";
+            } else {
+                topBtn.style.display = "none";
+            }
+        };
 
-        // FOOD ORDER SUCCESS
-        if (lastFoodOrder) {
-
-            document.getElementById("successTitle").innerText =
-                "Premium Food Order Confirmed 🍽️";
-
-            document.getElementById("successMessage").innerHTML =
-                `
-            Your order for <strong>${lastFoodOrder.foodItem}</strong>
-            (Quantity: <strong>${lastFoodOrder.quantity}</strong>)
-            is confirmed for
-            <strong>${lastFoodOrder.orderDate}</strong> at
-            <strong>${lastFoodOrder.orderTime}</strong>.
-            Current Status: <strong>Pending</strong>.
-            `;
-
-            localStorage.removeItem("lastFoodOrder");
-        }
-
-        // ROOM BOOKING SUCCESS
-        else if (lastBooking) {
-
-            document.getElementById("successTitle").innerText =
-                "Luxury Room Booking Confirmed 🏨";
-
-            document.getElementById("successMessage").innerHTML =
-                `
-            Your <strong>${lastBooking.roomType}</strong> booking is confirmed from
-            <strong>${lastBooking.checkInDate}</strong> to
-            <strong>${lastBooking.checkOutDate}</strong>.
-            Guests: <strong>${lastBooking.guests}</strong>.
-            Payment Status: <strong>Confirmed</strong>.
-            `;
-
-            localStorage.removeItem("lastBooking");
-        }
-
-        // GENERIC
-        else {
-            document.getElementById("successTitle").innerText =
-                "GrandStay Premium Success 🎉";
-
-            document.getElementById("successMessage").innerText =
-                "Your premium request has been successfully recorded.";
-        }
-
-        // DASHBOARD BUTTON
-        function goDashboard() {
-            window.location.href = "dashboard.html";
-        }
-
-        // HOME BUTTON
-        function goHome() {
-            window.location.href = "index.html";
+        // Scroll To Top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
         }
 
     </script>
