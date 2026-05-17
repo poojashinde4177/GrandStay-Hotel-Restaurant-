@@ -14,7 +14,12 @@
     <header>
         <h1>Book Your Luxury Stay at GrandStay</h1>
 
-        <nav>
+        <!-- Hamburger Menu -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <nav id="navbar">
             <a href="index.html">Home</a>
             <a href="rooms.html">Rooms</a>
             <a href="restaurant.html">Restaurant</a>
@@ -120,6 +125,13 @@
 
     <!-- Booking Script -->
     <script>
+
+        // HAMBURGER MENU
+        function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("show");
+        }
+
+        // BOOKING SYSTEM
         function bookRoom() {
 
             const customerName = document.getElementById("customerName").value.trim();
@@ -159,7 +171,7 @@
 
             console.log("Sending Booking Data:", booking);
 
-            fetch("http://localhost:8080/bookings", {
+            fetch("http://127.0.0.1:8080/bookings", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -182,7 +194,7 @@
 
                     localStorage.setItem("latestBooking", JSON.stringify(data));
 
-                    // REDIRECT TO SUCCESS PAGE
+                    // REDIRECT TO PAYMENT PAGE
                     window.location.href = "payment.html";
                 })
                 .catch(error => {
