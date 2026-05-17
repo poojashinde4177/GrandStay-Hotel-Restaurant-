@@ -14,7 +14,13 @@
     <header>
         <h1>GrandStay Hotel & Restaurant</h1>
 
-        <nav>
+        <!-- Hamburger Menu -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Navigation -->
+        <nav id="navbar">
             <a href="index.html">Home</a>
             <a href="rooms.html">Rooms</a>
             <a href="restaurant.html">Restaurant</a>
@@ -94,10 +100,21 @@
     </footer>
 
     <script>
+
+        // ===============================
+        // HAMBURGER MENU
+        // ===============================
+        function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("show");
+        }
+
+        // ===============================
+        // LOGIN FUNCTION
+        // ===============================
         function loginUser() {
 
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
             const selectedRole = document.getElementById("role").value;
 
             if (!email || !password) {
@@ -134,8 +151,10 @@
                         return;
                     }
 
-                    alert("Login Successful!");
+                    // SAVE USER
                     localStorage.setItem("grandstayUser", JSON.stringify(user));
+
+                    alert("Login Successful! Welcome to GrandStay ✨");
 
                     // REDIRECT
                     if (user.role === "admin") {
@@ -150,6 +169,7 @@
                     alert(error.message);
                 });
         }
+
     </script>
 
 </body>
