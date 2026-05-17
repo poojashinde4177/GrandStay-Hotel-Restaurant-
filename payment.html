@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrandStay Payment</title>
+    <title>GrandStay Premium Payment</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,7 +14,13 @@
     <header>
         <h1>Secure Payment Portal</h1>
 
-        <nav>
+        <!-- Hamburger Menu -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Navigation -->
+        <nav id="navbar">
             <a href="index.html">Home</a>
             <a href="rooms.html">Rooms</a>
             <a href="restaurant.html">Restaurant</a>
@@ -26,9 +32,23 @@
     </header>
 
     <!-- Hero Section -->
-    <section>
-        <h2>Complete Your Luxury Reservation</h2>
-        <p>Your dream stay is one secure payment away. Choose your preferred payment method below.</p>
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Complete Your Luxury Reservation</h2>
+            <p>Your dream stay is one secure payment away. Choose your preferred payment method below.</p>
+        </div>
+    </section>
+
+    <!-- Booking Summary -->
+    <section class="booking-form">
+        <h2>Your Booking Summary</h2>
+
+        <p><strong>Name:</strong> <span id="summaryName">Loading...</span></p>
+        <p><strong>Email:</strong> <span id="summaryEmail">Loading...</span></p>
+        <p><strong>Room Type:</strong> <span id="summaryRoom">Loading...</span></p>
+        <p><strong>Check-In:</strong> <span id="summaryCheckIn">Loading...</span></p>
+        <p><strong>Check-Out:</strong> <span id="summaryCheckOut">Loading...</span></p>
+        <p><strong>Guests:</strong> <span id="summaryGuests">Loading...</span></p>
     </section>
 
     <!-- Payment Form -->
@@ -38,7 +58,11 @@
 
         <input type="text" id="customerName" placeholder="Customer Name" required>
 
+        <input type="email" id="customerEmail" placeholder="Customer Email" required>
+
         <h3>Card Payment</h3>
+
+        <input type="text" id="cardHolder" placeholder="Card Holder Name">
 
         <input type="text" id="cardNumber" placeholder="Card Number (16 digits)" maxlength="16">
 
@@ -90,32 +114,82 @@
 
     <!-- Payment Script -->
     <script>
+
+        // ===============================
+        // HAMBURGER MENU
+        // ===============================
+        function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("show");
+        }
+
+        // ===============================
+        // LOAD BOOKING SUMMARY
+        // ===============================
+        const latestBooking = JSON.parse(localStorage.getItem("latestBooking"));
+
+        if (latestBooking) {
+            document.getElementById("summaryName").innerText = latestBooking.customerName;
+            document.getElementById("summaryEmail").innerText = latestBooking.customerEmail;
+            document.getElementById("summaryRoom").innerText = latestBooking.roomType;
+            document.getElementById("summaryCheckIn").innerText =
+                latestBooking.checkInDate + " " + latestBooking.checkInTime;
+            document.getElementById("summaryCheckOut").innerText =
+                latestBooking.checkOutDate + " " + latestBooking.checkOutTime;
+            document.getElementById("summaryGuests").innerText = latestBooking.guests;
+
+            // Auto-fill payment form
+            document.getElementById("customerName").value = latestBooking.customerName;
+            document.getElementById("customerEmail").value = latestBooking.customerEmail;
+        }
+
+        // ===============================
+        // PAYMENT FUNCTION
+        // ===============================
         function processPayment() {
 
-            const customerName = document.getElementById("customerName").value;
-            const cardNumber = document.getElementById("cardNumber").value;
-            const expiryDate = document.getElementById("expiryDate").value;
-            const cvv = document.getElementById("cvv").value;
-            const upiId = document.getElementById("upiId").value;
+            const customerName = document.getElementById("customerName").value.trim();
+            const customerEmail = document.getElementById("customerEmail").value.trim();
 
-            if (!customerName) {
-                alert("Please enter customer name!");
+            const cardHolder = document.getElementById("cardHolder").value.trim();
+            const cardNumber = document.getElementById("cardNumber").value.trim();
+            const expiryDate = document.getElementById("expiryDate").value.trim();
+            const cvv = document.getElementById("cvv").value.trim();
+
+            const upiId = document.getElementById("upiId").value.trim();
+
+            // BASIC CHECK
+            if (!customerName || !customerEmail) {
+                alert("Please enter customer details!");
                 return;
             }
 
-            if (
-                (cardNumber && expiryDate && cvv) ||
-                (upiId)
-            ) {
+            // CARD VALIDATION
+            const validCard =
+                cardHolder &&
+                cardNumber.length === 16 &&
+                expiryDate &&
+                cvv.length === 3;
 
-                alert("Payment Successful! Your booking is confirmed.");
-                window.location.href = "dashboard.html";
+            // UPI VALIDATION
+            const validUpi =
+                upiId.includes("@");
+
+            if (validCard || validUpi) {
+
+                alert("Payment Successful! Your luxury booking is confirmed 💳✨");
+
+                // SAVE PAYMENT STATUS
+                localStorage.setItem("paymentStatus", "Paid");
+
+                // REDIRECT
+                window.location.href = "premium-success.html";
 
             } else {
 
-                alert("Please complete Card details OR UPI ID!");
+                alert("Please complete valid Card details OR UPI ID!");
             }
         }
+
     </script>
 
 </body>
