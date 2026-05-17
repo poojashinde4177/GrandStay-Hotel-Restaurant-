@@ -12,11 +12,17 @@
 
     <!-- Header -->
     <header>
-        <h1>GrandStay Hotel Rooms</h1>
+        <h1>GrandStay Luxury Rooms</h1>
 
-        <nav>
+        <!-- Hamburger Button -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Navigation -->
+        <nav id="navbar">
             <a href="index.html">Home</a>
-            <a href="rooms.html">Rooms</a>
+            <a href="rooms.html" class="active">Rooms</a>
             <a href="restaurant.html">Restaurant</a>
             <a href="booking.html">Booking</a>
             <a href="dashboard.html">Dashboard</a>
@@ -26,22 +32,26 @@
     </header>
 
     <!-- Hero Section -->
-    <section>
-        <h2>Choose Your Luxury Experience</h2>
-        <p>From cozy elegance to royal indulgence, discover rooms crafted for every traveler.</p>
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Choose Your Luxury Experience</h2>
+            <p>From cozy elegance to royal indulgence, discover rooms crafted for every journey.</p>
+        </div>
     </section>
 
     <!-- Dynamic Rooms Section -->
     <section>
+        <h2>Our Premium Room Collection</h2>
+
         <div class="rooms-container" id="rooms-list">
 
             <!-- Default Room 1 -->
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85" alt="Standard Room">
                 <h3>Standard Room</h3>
-                <p>Affordable comfort with stylish interiors.</p>
+                <p>Affordable elegance with stylish comfort.</p>
                 <p>Price: ₹2500</p>
-                <p>Available</p>
+                <p>Available ✅</p>
                 <a href="booking.html"><button>Book Now</button></a>
             </div>
 
@@ -49,9 +59,9 @@
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1505692952047-1a78307da8f2" alt="Deluxe Room">
                 <h3>Deluxe Room</h3>
-                <p>Premium comfort with luxury details.</p>
+                <p>Premium interiors with refined luxury.</p>
                 <p>Price: ₹4500</p>
-                <p>Available</p>
+                <p>Available ✅</p>
                 <a href="booking.html"><button>Book Now</button></a>
             </div>
 
@@ -59,9 +69,9 @@
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1496417263034-38ec4f0b665a" alt="Luxury Suite">
                 <h3>Luxury Suite</h3>
-                <p>Elite hospitality with grand interiors.</p>
+                <p>Elite hospitality with grand sophistication.</p>
                 <p>Price: ₹8500</p>
-                <p>Available</p>
+                <p>Available ✅</p>
                 <a href="booking.html"><button>Book Now</button></a>
             </div>
 
@@ -77,19 +87,19 @@
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267" alt="Modern Comfort">
                 <h3>Modern Comfort</h3>
-                <p>Thoughtfully designed spaces for maximum relaxation.</p>
+                <p>Thoughtfully designed spaces for ultimate relaxation.</p>
             </div>
 
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa" alt="Elegant Design">
                 <h3>Elegant Design</h3>
-                <p>Luxury aesthetics blended with practical comfort.</p>
+                <p>Luxury aesthetics blended with timeless comfort.</p>
             </div>
 
             <div class="room-card">
                 <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85" alt="Premium Amenities">
                 <h3>Premium Amenities</h3>
-                <p>WiFi, dining, concierge, and unforgettable hospitality.</p>
+                <p>WiFi, dining, concierge, and unforgettable service.</p>
             </div>
 
         </div>
@@ -129,15 +139,22 @@
                             <h3>${room.roomType}</h3>
                             <p>Luxury stay with premium comfort.</p>
                             <p>Price: ₹${room.price}</p>
-                            <p>${room.available ? "Available" : "Not Available"}</p>
+                            <p>${room.available ? "Available ✅" : "Not Available ❌"}</p>
                             <a href="booking.html"><button>Book Now</button></a>
                         </div>
                     `;
                 });
             })
             .catch(error => console.error("Error loading rooms:", error));
+
+        // Hamburger Menu
+        function toggleMenu() {
+            const navbar = document.getElementById("navbar");
+            navbar.classList.toggle("show");
+        }
     </script>
 
 </body>
 
+</html>
 </html>
