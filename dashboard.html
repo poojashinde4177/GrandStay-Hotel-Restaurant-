@@ -14,7 +14,13 @@
     <header>
         <h1>GrandStay Customer Dashboard</h1>
 
-        <nav>
+        <!-- Hamburger Menu -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Navigation -->
+        <nav id="navbar">
             <a href="index.html">Home</a>
             <a href="rooms.html">Rooms</a>
             <a href="restaurant.html">Restaurant</a>
@@ -121,6 +127,21 @@
     <script>
 
         // ===============================
+        // MOBILE MENU TOGGLE
+        // ===============================
+        function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("show");
+        }
+
+        // AUTO CLOSE MENU
+        document.querySelectorAll("#navbar a").forEach(link => {
+            link.addEventListener("click", () => {
+                document.getElementById("navbar").classList.remove("show");
+            });
+        });
+
+
+        // ===============================
         // GET LOGGED IN USER
         // ===============================
         const loggedInUser = JSON.parse(localStorage.getItem("grandstayUser"));
@@ -130,15 +151,30 @@
             window.location.href = "login.html";
         }
 
-        document.getElementById("userName").innerText = loggedInUser.name;
-        document.getElementById("userEmail").innerText = loggedInUser.email;
-        document.getElementById("userRole").innerText = loggedInUser.role;
+        // FIXED NAME SUPPORT
+        document.getElementById("userName").innerText =
+            loggedInUser.name || loggedInUser.fullName || "Guest User";
+
+        document.getElementById("userEmail").innerText =
+            loggedInUser.email || "Not Available";
+
+        document.getElementById("userRole").innerText =
+            loggedInUser.role || "customer";
+
+        document.getElementById("welcomeMessage").innerText =
+            "Welcome, " + (loggedInUser.name || loggedInUser.fullName || "Guest");
+
 
         // ===============================
         // LOAD ROOM BOOKINGS
         // ===============================
         fetch("http://localhost:8080/bookings")
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch bookings");
+                }
+                return response.json();
+            })
             .then(data => {
 
                 const bookingTable = document.getElementById("bookingTableBody");
@@ -151,7 +187,7 @@
                 if (userBookings.length === 0) {
                     bookingTable.innerHTML = `
                     <tr>
-                        <td colspan="8">No room bookings found.</td>
+                        <td colspan="6">No room bookings found.</td>
                     </tr>
                 `;
                     return;
@@ -162,8 +198,8 @@
                     <tr>
                         <td>${booking.id}</td>
                         <td>${booking.roomType}</td>
-                        <td>${booking.checkInDate}</td>
-                        <td>${booking.checkOutDate}</td>
+                        <td>${booking.checkInDate} ${booking.checkInTime || ""}</td>
+                        <td>${booking.checkOutDate} ${booking.checkOutTime || ""}</td>
                         <td>${booking.guests}</td>
                         <td>Paid ✅</td>
                     </tr>
@@ -176,7 +212,7 @@
 
                 document.getElementById("bookingTableBody").innerHTML = `
                 <tr>
-                    <td colspan="8">Failed to load bookings.</td>
+                    <td colspan="6">Failed to load bookings.</td>
                 </tr>
             `;
             });
@@ -186,7 +222,12 @@
         // LOAD FOOD ORDERS
         // ===============================
         fetch("http://localhost:8080/food-orders")
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch food orders");
+                }
+                return response.json();
+            })
             .then(data => {
 
                 const foodTable = document.getElementById("foodOrderTableBody");
@@ -199,7 +240,7 @@
                 if (userOrders.length === 0) {
                     foodTable.innerHTML = `
                     <tr>
-                        <td colspan="7">No food orders found.</td>
+                        <td colspan="6">No food orders found.</td>
                     </tr>
                 `;
                     return;
@@ -224,7 +265,7 @@
 
                 document.getElementById("foodOrderTableBody").innerHTML = `
                 <tr>
-                    <td colspan="7">Failed to load food orders.</td>
+                    <td colspan="6">Failed to load food orders.</td>
                 </tr>
             `;
             });
@@ -240,3 +281,7 @@
         }
 
     </script>
+
+</body>
+
+</html>
